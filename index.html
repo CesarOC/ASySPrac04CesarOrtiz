@@ -1,0 +1,330 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Pr&aacute;ctica 4: Convoluci&oacute;n y Correlaci&oacute;n de se&ntilde;ales en tiempo continuo y discreto</title><meta name="generator" content="MATLAB 9.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-05-08"><meta name="DC.source" content="Publishpractica4.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Pr&aacute;ctica 4: Convoluci&oacute;n y Correlaci&oacute;n de se&ntilde;ales en tiempo continuo y discreto</h1><!--introduction--><p>Integrantes del equipo: Ortega Gonz&aacute;lez Mois&eacute;s Donaldo,Ortiz Colin Cesar Antonio, Zarate Murillo Jose Antonio</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Introduccion: Algoritmos de integraci&oacute;n</a></li><li><a href="#4">Problema 1</a></li><li><a href="#6">Problema 2</a></li><li><a href="#8">Problema 3</a></li><li><a href="#9">Problema 4</a></li><li><a href="#10">Problema 5</a></li><li><a href="#11">Referencias</a></li></ul></div><h2 id="1">Introduccion: Algoritmos de integraci&oacute;n</h2><pre class="codeinput"><span class="comment">%%Introducci&oacute;n: M&eacute;todos Num&eacute;ricos</span>
+<span class="comment">%Geom&eacute;tricamente entendemos la integraci&oacute;n como una operaci&oacute;n que nos</span>
+<span class="comment">%permite conocer el &aacute;rea que se forma entre una funci&oacute;n y el eje de las</span>
+<span class="comment">%absisas dentro de los l&iacute;mites que se definan. La mayor parte de las</span>
+<span class="comment">%operaciones de integraci&oacute;n requieren que encontrar una antiderivada; dicho</span>
+<span class="comment">%proceso se logra mediante distintos m&eacute;todos de integraci&oacute;n que se han</span>
+<span class="comment">%definido con el timepo. Sin embargo existen algunas funciones para las</span>
+<span class="comment">%cu&aacute;les no es posible encontrar su antiderivada, pues no existen m&eacute;todos de</span>
+<span class="comment">%integraci&oacute;n que puedan aplicarse. En esos casos se ocupan los m&eacute;todos</span>
+<span class="comment">%num&eacute;ricos, los cu&aacute;les que si bien no nos ayudan a conocer la antiderivada</span>
+<span class="comment">%de la funci&oacute;n, nos permiten aproximar el &aacute;rea bajo la curva dentro de los</span>
+<span class="comment">%mismos l&iacute;mites.</span>
+<span class="comment">%M&eacute;todos de Newton-Coles</span>
+<span class="comment">%Estos se basan en la idea de que se puede aproximar cualquier funci&oacute;n a</span>
+<span class="comment">%un polinomio, si se suma un t&eacute;rmino de error. Existen varios subm&eacute;todos</span>
+<span class="comment">%que se eligen seg&uacute;n el grado del polinomio a trabajar.</span>
+<span class="comment">%Ejemplo. Sea</span>
+</pre><p><img src="Publishpractica4_eq15580636086611696067.png" alt="$$f(x)=e^{-x^{2}}$$"></p><pre class="codeinput"><span class="comment">%si deseamos calcular el &aacute;rea dada por la integral</span>
+</pre><p><img src="Publishpractica4_eq01579267849704978230.png" alt="$$f(x)=\int_{-1}^{1}e^{-x^{2}}dx$$"></p><pre class="codeinput"><span class="comment">%Ma.tlab puede realizar la operaci&oacute;n ya que usa algoritmos de m&eacute;todos</span>
+<span class="comment">%num&eacute;ricos</span>
+a=-1; b=1;
+x=-2:.01:2;
+f=@(x) exp(-x.^2);
+area_exacta=integral(f,a,b)
+<span class="comment">%Para tratar de igualar dicho resultado, probaremos los siguientes m&eacute;todos:</span>
+<span class="comment">%Trapecio se refiere al uso un polinomio de grado uno y se opera con el uso</span>
+<span class="comment">%de la siguiente f&oacute;rmula</span>
+n=1; h=(b-a)/n;
+x0=a; x1=b;
+area_trapecio=(h/2)*(f(x0)+f(x1))<span class="comment">%-E</span>
+<span class="comment">%Simpson trabaja con polinomios de grado dos y ocupa la siguiente f&oacute;rmula.</span>
+n=2;h=(b-a)/n;
+ x0=a; x1=(b+a)/2; x2=b;
+area_simpson=(h/3)*(f(x0)+4*f(x1)+f(x2))<span class="comment">%-E</span>
+<span class="comment">%Simpson 3/8 trabaja con polinomios de grado 3 .</span>
+n=3; h=(b-a)/n;
+x0=a; x1=(2*a+b)/3; x2=(2*b+a)/3 ;x3=b;
+area_38simpson=(3*h/8)*(f(x0)+3*f(x1)+3*f(x2)+f(x3))<span class="comment">%-E</span>
+<span class="comment">%Compuesta. Se trata de aplicaciones de las formas pasadas cuando se divide</span>
+<span class="comment">%a la se&ntilde;al en peque&ntilde;os segmentos, a cada uno de los cuales se aplican los</span>
+<span class="comment">%m&eacute;todos anteriores, resultanto las siguientes f&oacute;rmulas para cada caso:</span>
+
+<span class="comment">%probando la regla de trapecio compuesta</span>
+syms <span class="string">k</span>;
+n=10;h=(b-a)/n;
+xk=a+h*k;
+area_trapecio_compuesta=(h/2)*(f(a)+2*symsum(f(xk),k,1,n)+f(b))<span class="comment">%-E</span>
+<span class="comment">%probando la regla de Simpson compuesta</span>
+n=10; h=(b-a)/n;
+x0=a; xk=a+h*k; xk2=a+h*(k-1);
+area_38simpson=(h/3)*(f(a)+2*symsum(f(xk),k,1,(n/2)-1)+4*symsum(f(xk2),k,1,(n/2))+f(b))<span class="comment">%-E</span>
+</pre><pre class="codeoutput">
+area_exacta =
+
+    1.4936
+
+
+area_trapecio =
+
+    0.7358
+
+
+area_simpson =
+
+    1.5786
+
+
+area_38simpson =
+
+    1.5262
+
+ 
+area_trapecio_compuesta =
+ 
+exp(-1)/5 + (2*exp(-1/25))/5 + (2*exp(-4/25))/5 + (2*exp(-9/25))/5 + (2*exp(-16/25))/5 + 616038134154747/2251799813685248
+ 
+ 
+area_38simpson =
+ 
+(4*exp(-1))/15 + (2*exp(-1/25))/5 + (2*exp(-4/25))/5 + (2*exp(-9/25))/5 + (2*exp(-16/25))/5 + 828390857088487/16888498602639360
+ 
+</pre><h2 id="4">Problema 1</h2><p>A continuacion la solucion del problema 1</p><pre class="codeinput">x = @(t) exp(-t).*(t&gt;=0 &amp; t&lt;=1);<span class="comment">% Se declara la primer funci&oacute;n</span>
+h = @(t) t.*(t&gt;=-1 &amp; t&lt;=1);<span class="comment">% Se declara la segunda funci&oacute;n</span>
+n=0:1;<span class="comment">% Intervalo valido de la primera funcion</span>
+m=-1:1;<span class="comment">% Intervalo valido de la segunda funcion</span>
+convconm(x,h,n,m)
+</pre><img vspace="5" hspace="5" src="Publishpractica4_01.png" alt=""> <p>En la siguiente imagen se muestran las ecuaciones pertinentes a las funciones analiticas obtenidas de la convolucion</p><pre class="codeinput">figure(2)
+f=imread(<span class="string">'1.jpg'</span>);
+imshow(f)
+</pre><img vspace="5" hspace="5" src="Publishpractica4_02.png" alt=""> <h2 id="6">Problema 2</h2><p>Debido a que las funciones analiticas son distintas, para superponer el resultado de la autocorrelaci&oacute;n con el codigo convconm y las graficas de las funciones analiticas previamente encontradas se necesit&oacute; crear convconm2, a continuaci&oacute;n la soluci&oacute;n del problema 2</p><pre class="codeinput">x1=@(t) (heaviside(t)-2.*heaviside(t-3)+heaviside(t-4)).*(t&gt;=0 &amp; t&lt;=4); <span class="comment">%funcion dada</span>
+xd1=@(t) (heaviside(-t)-2.*heaviside(-t-3)+heaviside(-t-4)).*(t&gt;=-4 &amp;t&lt;=0);<span class="comment">% funcion invertida para hacer la correlacion a partir del codigo de convoluci&oacute;n</span>
+n=0:4;<span class="comment">% definidas en el intervalo 0-4</span>
+m=-4:0;<span class="comment">% invertida esta definida de -1-4</span>
+convconm2(x1,xd1,n,m)
+</pre><img vspace="5" hspace="5" src="Publishpractica4_03.png" alt=""> <p>En la siguiente imagen se muestran las ecuaciones pertinentes a las funciones analiticas obtenidas de la convolucion</p><pre class="codeinput">figure(3)
+Y=imread(<span class="string">'2.jpg'</span>);
+imshow(Y)
+</pre><img vspace="5" hspace="5" src="Publishpractica4_04.png" alt=""> <h2 id="8">Problema 3</h2><pre class="codeinput">a=@(n) 3.*n;<span class="comment">% formula de la se&ntilde;al(c)</span>
+n=-3:3; <span class="comment">% vector valido de la se&ntilde;al,al evaluarla en a nos dara las alturas</span>
+b=@(n) -2.*n.*(n&gt;=-2 &amp; n&lt;=0)+2.*n.*(n&gt;=0 &amp; n&lt;=2);<span class="comment">% se&ntilde;al 2 (d)</span>
+convdisc([n;a(n)],[n;b(n)])
+</pre><img vspace="5" hspace="5" src="Publishpractica4_05.png" alt=""> <h2 id="9">Problema 4</h2><pre class="codeinput">a=@(n) 3.*n;<span class="comment">% formula se&ntilde;al(c) la misma que en la convolucion</span>
+n=-3:3;
+c=@(n) -2.*n.*(n&gt;=-2 &amp; n&lt;=0)+2.*n.*(n&gt;=0 &amp; n&lt;=2);;<span class="comment">% se&ntilde;al 2 (d) si la invierto(estructura de correlacion para hacer convoluci&oacute;n) es la misma, asi que la funcion no cambia;</span>
+convdisc([n;a(n)],[n;c(n)])
+</pre><img vspace="5" hspace="5" src="Publishpractica4_06.png" alt=""> <h2 id="10">Problema 5</h2><p>A continuacion el codigo usando el comando conv que soluciona el problema 5( el cual es el mismo que el problema 3)</p><pre class="codeinput">figure(4)
+n=-5:5;
+X1=[0 0 -9 -6 -3 0 3 6 9 0 0];<span class="comment">%alturas de la se&ntilde;al 1</span>
+X2=[0 0 0 4 2 0 2 4 0 0 0];<span class="comment">%alturas de la se&ntilde;al 2</span>
+X3=conv(X1,X2,<span class="string">'same'</span>);<span class="comment">%utilizamos el comando conv</span>
+
+subplot(3,2,1);
+stem(n,X1,<span class="string">'filled'</span>,<span class="string">'g'</span>,<span class="string">'linewidth'</span>,2);<span class="comment">%graficamos la se&ntilde;al(c)</span>
+title(<span class="string">'X1[n]'</span>);
+grid <span class="string">on</span>
+subplot(3,2,2);
+stem(n,X2,<span class="string">'filled'</span>,<span class="string">'r'</span>,<span class="string">'linewidth'</span>,2);<span class="comment">%graficamos la se&ntilde;al (d)</span>
+title(<span class="string">'X2[n-m]'</span>);
+grid <span class="string">on</span>
+subplot(3,2,[3 6]);
+long_fg_n=length(X1)+length(X2)-1;
+stem(n,X3,<span class="string">'o'</span>,<span class="string">'filled'</span>,<span class="string">'linewidth'</span>,2);
+title(<span class="string">'Convoluci&oacute;n'</span>);
+grid <span class="string">on</span>
+</pre><img vspace="5" hspace="5" src="Publishpractica4_07.png" alt=""> <h2 id="11">Referencias</h2><p>Lathi, B. P., (2005). Linear Systems and Signals. EUA: Oxford university Press</p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Práctica 4: Convolución y Correlación de señales en tiempo continuo y discreto
+% Integrantes del equipo: Ortega González Moisés Donaldo,Ortiz Colin Cesar Antonio, Zarate Murillo Jose Antonio
+
+
+%% Introduccion: Algoritmos de integración
+%
+% 
+%%Introducción: Métodos Numéricos
+%Geométricamente entendemos la integración como una operación que nos 
+%permite conocer el área que se forma entre una función y el eje de las 
+%absisas dentro de los límites que se definan. La mayor parte de las
+%operaciones de integración requieren que encontrar una antiderivada; dicho
+%proceso se logra mediante distintos métodos de integración que se han
+%definido con el timepo. Sin embargo existen algunas funciones para las
+%cuáles no es posible encontrar su antiderivada, pues no existen métodos de
+%integración que puedan aplicarse. En esos casos se ocupan los métodos
+%numéricos, los cuáles que si bien no nos ayudan a conocer la antiderivada
+%de la función, nos permiten aproximar el área bajo la curva dentro de los
+%mismos límites.
+%Métodos de Newton-Coles
+%Estos se basan en la idea de que se puede aproximar cualquier función a
+%un polinomio, si se suma un término de error. Existen varios submétodos
+%que se eligen según el grado del polinomio a trabajar.
+%Ejemplo. Sea 
+%%
+% 
+% $$f(x)=e^{-x^{2}}$$
+% 
+% 
+%si deseamos calcular el área dada por la integral 
+%%
+% 
+% $$f(x)=\int_{-1}^{1}e^{-x^{2}}dx$$
+% 
+%Ma.tlab puede realizar la operación ya que usa algoritmos de métodos
+%numéricos
+a=-1; b=1;
+x=-2:.01:2;
+f=@(x) exp(-x.^2);
+area_exacta=integral(f,a,b)
+%Para tratar de igualar dicho resultado, probaremos los siguientes métodos:
+%Trapecio se refiere al uso un polinomio de grado uno y se opera con el uso
+%de la siguiente fórmula
+n=1; h=(b-a)/n;
+x0=a; x1=b;
+area_trapecio=(h/2)*(f(x0)+f(x1))%-E
+%Simpson trabaja con polinomios de grado dos y ocupa la siguiente fórmula.
+n=2;h=(b-a)/n;
+ x0=a; x1=(b+a)/2; x2=b;
+area_simpson=(h/3)*(f(x0)+4*f(x1)+f(x2))%-E
+%Simpson 3/8 trabaja con polinomios de grado 3 .
+n=3; h=(b-a)/n;
+x0=a; x1=(2*a+b)/3; x2=(2*b+a)/3 ;x3=b;
+area_38simpson=(3*h/8)*(f(x0)+3*f(x1)+3*f(x2)+f(x3))%-E
+%Compuesta. Se trata de aplicaciones de las formas pasadas cuando se divide
+%a la señal en pequeños segmentos, a cada uno de los cuales se aplican los
+%métodos anteriores, resultanto las siguientes fórmulas para cada caso: 
+
+%probando la regla de trapecio compuesta
+syms k;
+n=10;h=(b-a)/n;
+xk=a+h*k;
+area_trapecio_compuesta=(h/2)*(f(a)+2*symsum(f(xk),k,1,n)+f(b))%-E
+%probando la regla de Simpson compuesta
+n=10; h=(b-a)/n;
+x0=a; xk=a+h*k; xk2=a+h*(k-1);
+area_38simpson=(h/3)*(f(a)+2*symsum(f(xk),k,1,(n/2)-1)+4*symsum(f(xk2),k,1,(n/2))+f(b))%-E
+
+
+
+
+%% Problema 1
+% A continuacion la solucion del problema 1
+x = @(t) exp(-t).*(t>=0 & t<=1);% Se declara la primer función
+h = @(t) t.*(t>=-1 & t<=1);% Se declara la segunda función
+n=0:1;% Intervalo valido de la primera funcion
+m=-1:1;% Intervalo valido de la segunda funcion
+convconm(x,h,n,m)
+%%
+% En la siguiente imagen se muestran las ecuaciones pertinentes a las
+% funciones analiticas obtenidas de la convolucion
+figure(2)
+f=imread('1.jpg');
+imshow(f)
+%% Problema 2
+% Debido a que las funciones analiticas son distintas, para superponer el
+% resultado de la autocorrelación con el codigo convconm y las graficas de las funciones
+% analiticas previamente encontradas se necesitó crear convconm2, a
+% continuación la solución del problema 2
+x1=@(t) (heaviside(t)-2.*heaviside(t-3)+heaviside(t-4)).*(t>=0 & t<=4); %funcion dada
+xd1=@(t) (heaviside(-t)-2.*heaviside(-t-3)+heaviside(-t-4)).*(t>=-4 &t<=0);% funcion invertida para hacer la correlacion a partir del codigo de convolución
+n=0:4;% definidas en el intervalo 0-4
+m=-4:0;% invertida esta definida de -1-4
+convconm2(x1,xd1,n,m)
+%%
+% En la siguiente imagen se muestran las ecuaciones pertinentes a las
+% funciones analiticas obtenidas de la convolucion
+figure(3)
+Y=imread('2.jpg');
+imshow(Y)
+%% Problema 3
+a=@(n) 3.*n;% formula de la señal(c)
+n=-3:3; % vector valido de la señal,al evaluarla en a nos dara las alturas
+b=@(n) -2.*n.*(n>=-2 & n<=0)+2.*n.*(n>=0 & n<=2);% señal 2 (d)
+convdisc([n;a(n)],[n;b(n)])
+%% Problema 4
+a=@(n) 3.*n;% formula señal(c) la misma que en la convolucion
+n=-3:3;
+c=@(n) -2.*n.*(n>=-2 & n<=0)+2.*n.*(n>=0 & n<=2);;% señal 2 (d) si la invierto(estructura de correlacion para hacer convolución) es la misma, asi que la funcion no cambia;
+convdisc([n;a(n)],[n;c(n)])
+%% Problema 5
+% A continuacion el codigo usando el comando conv que soluciona el problema
+% 5( el cual es el mismo que el problema 3)
+figure(4)
+n=-5:5;
+X1=[0 0 -9 -6 -3 0 3 6 9 0 0];%alturas de la señal 1
+X2=[0 0 0 4 2 0 2 4 0 0 0];%alturas de la señal 2
+X3=conv(X1,X2,'same');%utilizamos el comando conv
+
+subplot(3,2,1);
+stem(n,X1,'filled','g','linewidth',2);%graficamos la señal(c)
+title('X1[n]');
+grid on
+subplot(3,2,2);
+stem(n,X2,'filled','r','linewidth',2);%graficamos la señal (d)
+title('X2[n-m]');
+grid on
+subplot(3,2,[3 6]);
+long_fg_n=length(X1)+length(X2)-1;
+stem(n,X3,'o','filled','linewidth',2);
+title('Convolución');
+grid on
+%% Referencias
+% Lathi, B. P., (2005). Linear Systems and Signals. EUA: Oxford university Press
+##### SOURCE END #####
+--></body></html>
