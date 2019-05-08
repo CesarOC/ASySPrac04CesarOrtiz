@@ -167,11 +167,13 @@ imshow(Y)
 n=-3:3; <span class="comment">% vector valido de la se&ntilde;al,al evaluarla en a nos dara las alturas</span>
 b=@(n) -2.*n.*(n&gt;=-2 &amp; n&lt;=0)+2.*n.*(n&gt;=0 &amp; n&lt;=2);<span class="comment">% se&ntilde;al 2 (d)</span>
 convdisc([n;a(n)],[n;b(n)])
-</pre><img vspace="5" hspace="5" src="Publishpractica4_05.png" alt=""> <h2 id="9">Problema 4</h2><pre class="codeinput">a=@(n) 3.*n;<span class="comment">% formula se&ntilde;al(c) la misma que en la convolucion</span>
+</pre><img vspace="5" hspace="5" src="Publishpractica4_05.png" alt=""> <h2 id="9"><img src="GIFP3.gif" alt="GIFP3.gif">
+  <br>Problema 4</h2><pre class="codeinput">a=@(n) 3.*n;<span class="comment">% formula se&ntilde;al(c) la misma que en la convolucion</span>
 n=-3:3;
 c=@(n) -2.*n.*(n&gt;=-2 &amp; n&lt;=0)+2.*n.*(n&gt;=0 &amp; n&lt;=2);;<span class="comment">% se&ntilde;al 2 (d) si la invierto(estructura de correlacion para hacer convoluci&oacute;n) es la misma, asi que la funcion no cambia;</span>
 convdisc([n;a(n)],[n;c(n)])
-</pre><img vspace="5" hspace="5" src="Publishpractica4_06.png" alt=""> <h2 id="10">Problema 5</h2><p>A continuacion el codigo usando el comando conv que soluciona el problema 5( el cual es el mismo que el problema 3)</p><pre class="codeinput">figure(4)
+</pre><img vspace="5" hspace="5" src="Publishpractica4_06.png" alt=""> <h2 id="10"><img src="GIFP4.gif" alt="GIFP4.gif">
+ <br> Problema 5</h2><p>A continuacion el codigo usando el comando conv que soluciona el problema 5( el cual es el mismo que el problema 3)</p><pre class="codeinput">figure(4)
 n=-5:5;
 X1=[0 0 -9 -6 -3 0 3 6 9 0 0];<span class="comment">%alturas de la se&ntilde;al 1</span>
 X2=[0 0 0 4 2 0 2 4 0 0 0];<span class="comment">%alturas de la se&ntilde;al 2</span>
