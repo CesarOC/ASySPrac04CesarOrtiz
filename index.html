@@ -87,11 +87,12 @@ n=-3:3; <span class="comment">% vector valido de la se&ntilde;al,al evaluarla en
 b=@(n) -2.*n.*(n&gt;=-2 &amp; n&lt;=0)+2.*n.*(n&gt;=0 &amp; n&lt;=2);<span class="comment">% se&ntilde;al 2 (d)</span>
 convdisc([n;a(n)],[n;b(n)])
 </pre><img vspace="5" hspace="5" src="Publishpractica4_06.png" alt=""> <h2 id="7"><img src="GIFP3.gif" alt="GIFP3.gif">
- Problema 4</h2><pre class="codeinput">a=@(n) 3.*n;<span class="comment">% formula se&ntilde;al(c) la misma que en la convolucion</span>
+ <br>Problema 4</h2><pre class="codeinput">a=@(n) 3.*n;<span class="comment">% formula se&ntilde;al(c) la misma que en la convolucion</span>
 n=-3:3;
 c=@(n) -2.*n.*(n&gt;=-2 &amp; n&lt;=0)+2.*n.*(n&gt;=0 &amp; n&lt;=2);;<span class="comment">% se&ntilde;al 2 (d) si la invierto(estructura de correlacion para hacer convoluci&oacute;n) es la misma, asi que la funcion no cambia;</span>
 convdisc([n;a(n)],[n;c(n)])
-</pre><img vspace="5" hspace="5" src="Publishpractica4_07.png" alt=""> <h2 id="8"> <img src="GIFP4.gif" alt="GIFP4.gif">Problema 5</h2><p>A continuacion el codigo usando el comando conv que soluciona el problema 5( el cual es el mismo que el problema 3)</p><pre class="codeinput">figure(4)
+</pre><img vspace="5" hspace="5" src="Publishpractica4_07.png" alt=""> <h2 id="8"> <img src="GIFP4.gif" alt="GIFP4.gif">
+  <br>Problema 5</h2><p>A continuacion el codigo usando el comando conv que soluciona el problema 5( el cual es el mismo que el problema 3)</p><pre class="codeinput">figure(4)
 n=-5:5;
 X1=[0 0 -9 -6 -3 0 3 6 9 0 0];<span class="comment">%alturas de la se&ntilde;al 1</span>
 X2=[0 0 0 4 2 0 2 4 0 0 0];<span class="comment">%alturas de la se&ntilde;al 2</span>
@@ -121,10 +122,64 @@ grid <span class="string">on</span>
 
 
  
-%% Introduccion: Algoritmos de integración
-%
-% Existen distintos algoritmos de integracion
-% Etc etc
+
+%%Introducción: Métodos Numéricos
+%Geométricamente entendemos la integración como una operación que nos 
+%permite conocer el área que se forma entre una función y el eje de las 
+%absisas dentro de los límites que se definan. La mayor parte de las
+%operaciones de integración requieren que encontrar una antiderivada; dicho
+%proceso se logra mediante distintos métodos de integración que se han
+%definido con el timepo. Sin embargo existen algunas funciones para las
+%cuáles no es posible encontrar su antiderivada, pues no existen métodos de
+%integración que puedan aplicarse. En esos casos se ocupan los métodos
+%numéricos, los cuáles que si bien no nos ayudan a conocer la antiderivada
+%de la función, nos permiten aproximar el área bajo la curva dentro de los
+%mismos límites.
+%Métodos de Newton-Coles
+%Estos se basan en la idea de que se puede aproximar cualquier función a
+%un polinomio, si se suma un término de error. Existen varios submétodos
+%que se eligen según el grado del polinomio a trabajar.
+
+%Trapecio se refiere al uso un polinomio de grado uno y se opera con el uso
+%de la siguiente fórmula
+
+%Simpson trabaja con polinomios de grado dos y ocupa la siguiente fórmula.
+
+%Simpson 3/8 trabaja con polinomios de grado 3 .
+
+%Compuesta. Se trata de aplicaciones de las formas pasadas cuando se divide
+%a la señal en pequeños segmentos, a cada uno de los cuales se aplican los
+%métodos anteriores, resultanto las siguientes fórmulas para cada caso: 
+
+
+%Ejemplo. Sea f(x)=e^-(x^2) Matlab es capaz de calcular su integral
+%definida de -1 a 1 por que usa algoritmos de métodos numéricos. 
+a=-1; b=1;
+x=-2:.01:2;
+f=@(x) exp(-x.^2);
+area_exacta=integral(f,a,b)
+%probando la regla del trapecio con 
+n=1; h=(b-a)/n;
+x0=a; x1=b;
+area_trapecio=(h/2)*(f(x0)+f(x1))%-E
+%probando la regla de Simpson con 
+ n=2;h=(b-a)/n;
+ x0=a; x1=(b+a)/2; x2=b;
+area_simpson=(h/3)*(f(x0)+4*f(x1)+f(x2))%-E
+%probando la regla de 3/8 de Simpson con 
+n=3; h=(b-a)/n;
+x0=a; x1=(2*a+b)/3; x2=(2*b+a)/3 ;x3=b;
+area_38simpson=(3*h/8)*(f(x0)+3*f(x1)+3*f(x2)+f(x3))%-E
+%probando la regla de trapecio compuesta
+ n=10;h=(b-a)/n;
+xk=a+h*k;
+area_trapecio_compuesta=(h/2)*(f(a)+2*symsum(f(xk),k,1,n)+f(b))%-E
+%probando la regla de Simpson compuesta
+n=10; h=(b-a)/n;
+x0=a; xk=a+h*k; xk2=a+h*(k-1);
+area_38simpson=(h/3)*(f(a)+2*symsum(f(xk),k,1,(n/2)-1)+4*symsum(f(xk2),k,1,(n/2))+f(b))%-E
+
+
 %% Problema 1
 % A continuacion la solucion del problema 1
 x = @(t) exp(-t).*(t>=0 & t<=1);% Se declara la primer función
